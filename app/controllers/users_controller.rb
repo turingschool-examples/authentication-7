@@ -9,27 +9,6 @@ class UsersController < ApplicationController
     flash[:success] = "Welcome, #{new_user.username}!"
     redirect_to root_path
   end
-
-  def login_form
-  end
-
-  def login
-    user = User.find_by(username: params[:username])
-    if user && user.authenticate(params[:password])
-      session[:user_id] = user.id
-      flash[:success] = "Welcome, #{user.username}!"
-      if user.admin?
-        redirect_to admin_dashboard_path
-      elsif user.manager?
-        redirect_to root_path
-      elsif
-        redirect_to root_path
-      end
-    else
-      flash[:error] = "Sorry, your credentials are bad."
-      render :login_form
-    end
-  end
   
   private
   def user_params
